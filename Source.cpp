@@ -44,8 +44,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				a[pos][count[pos]++] = i + 1;
 				prevbit = currentbit;
 			}
+			InvalidateRect(hWnd, 0, 1);
 		}
-		InvalidateRect(hWnd, 0, 1);
 		break;
 	case WM_PAINT:
 		{
