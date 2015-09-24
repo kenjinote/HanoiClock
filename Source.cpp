@@ -1,6 +1,6 @@
 #include <windows.h>
 
-TCHAR szClassName[] = TEXT("Window");
+TCHAR szClassName[] = TEXT("HanoiClock");
 
 __int64 SystemTimeToUnixTime(const LPSYSTEMTIME pst)
 {
@@ -68,10 +68,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 							rect.bottom - j * 3 + 3);
 					}
 				}
-				HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);
+				const HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);
 				TCHAR szText[1024];
 				wsprintf(szText, TEXT("%I64d"), n);
 				DrawText(hdc, szText, -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+				SelectObject(hdc, hOldFont);
 			}
 			EndPaint(hWnd, &ps);
 		}
