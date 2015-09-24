@@ -30,21 +30,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			SYSTEMTIME st;
 			GetLocalTime(&st);
 			n = SystemTimeToUnixTime(&st);
+			ZeroMemory(a, 3 * 64);
+			int count[3] = { 0 };
+			int pos = 0;
+			bool prevbit = 0;
+			for (int i = 63; i >= 0; --i)
 			{
-				ZeroMemory(a, 3 * 64);
-				int count[3] = { 0 };
-				int pos = 0;
-				bool prevbit = 0;
-				for (int i = 63; i >= 0; --i)
+				const bool currentbit = (n >> i) & 1;
+				if (prevbit != currentbit)
 				{
-					const bool currentbit = (n >> i) & 1;
-					if (prevbit != currentbit)
-					{
-						pos = (pos + 2 - (i + currentbit) % 2) % 3;
-					}
-					a[pos][count[pos]++] = i + 1;
-					prevbit = currentbit;
+					pos = (pos + 2 - (i + currentbit) % 2) % 3;
 				}
+				a[pos][count[pos]++] = i + 1;
+				prevbit = currentbit;
 			}
 		}
 		InvalidateRect(hWnd, 0, 1);
